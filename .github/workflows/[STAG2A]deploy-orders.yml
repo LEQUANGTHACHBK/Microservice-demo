@@ -1,0 +1,24 @@
+name: STAG2A_DEPLOY_ORDERS
+
+on:
+  push:
+    branches: [ deployment-stag2a ]
+    paths:
+      - 'orders/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - run: cd orders && docker build -t thachlequang/orders .
+      - run: docker push thachlequang/orders
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save k8s-setup
+      - run: kubectl rollout restart deployment orders-depl
