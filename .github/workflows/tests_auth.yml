@@ -3,6 +3,8 @@ name: TEST_AUTH
 on:
   pull_request:
     branches: [ develop ]
+    paths:
+      - 'orders/**'
 
 jobs:
   build:
