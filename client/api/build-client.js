@@ -5,10 +5,12 @@ export default ({ req }) => {
     // We are on the server
 
     return axios.create({
-      baseURL: 'http://www.ontop.gq',
-      // baseURL: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+      baseURL:
+        // 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
+        'www.ontop.gq',
       headers: req.headers,
     });
+    
   } else {
     // We must be on the browser
     return axios.create({
