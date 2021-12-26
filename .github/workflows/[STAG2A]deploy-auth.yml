@@ -1,0 +1,26 @@
+# This is a basic workflow to help you get started with Actions
+
+name: STAG2A_DEPLOY_AUTH
+
+on:
+  push:
+    branches: [ deployment-stag2a ]
+    paths:
+      - 'auth/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      - run: cd auth && docker build -t thachlequang/auth .
+      - run: docker push thachlequang/auth
+      - uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - run: doctl kubernetes cluster kubeconfig save k8s-setup
+      - run: kubectl rollout restart deployment auth-depl
