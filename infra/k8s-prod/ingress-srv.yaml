@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: www.ontop.gq
+    - host: www.uat-uhouse.tk
       http:
         paths:
           - path: /api/payments/?(.*)
@@ -54,7 +54,7 @@ kind: Service
 metadata:
   annotations:
     service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: 'true'
-    service.beta.kubernetes.io/do-loadbalancer-hostname: 'www.ontop.gq'
+    service.beta.kubernetes.io/do-loadbalancer-hostname: 'www.uat-uhouse.tk'
   labels:
     helm.sh/chart: ingress-nginx-2.0.3
     app.kubernetes.io/name: ingress-nginx
