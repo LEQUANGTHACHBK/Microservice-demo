@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: new-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: new
+  template:
+    metadata:
+      labels:
+        app: new
+    spec:
+      containers:
+        - name: new
+          image: thachlequang/new
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: new-srv
+spec:
+  selector:
+    app: new
+  ports:
+    - name: new
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+

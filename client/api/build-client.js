@@ -7,7 +7,7 @@ export default ({ req }) => {
     return axios.create({
       baseURL:
         // 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local',
-        'http://ontop.gq',
+        'http://uat-uhouse.tk',
       headers: req.headers,
     });
     

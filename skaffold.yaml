@@ -57,3 +57,11 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: thachlequang/new
+      context: new
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
